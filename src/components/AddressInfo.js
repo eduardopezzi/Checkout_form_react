@@ -3,66 +3,71 @@ import './Forms'
 import ErrorMessage from './ErrorMessage'
 import './AddressInfo.css'
 
-export default function AddressInfo({nextStep}) {
-  const [city, setCity] = React.useState('')
-  const onChangeCity = event => {
-    setCity(event.target.value)
+function useTextInputState() {
+  const [value, setValue] = React.useState('')
+  const onChange = event => setValue(event.target.value)
+  return {
+    value,
+    onChange,
+  }
+}
+
+function FormField({ children }) {
+  return <div className='FormField'>{children}</div>
+}
+
+function FormFieldLabel({ children, type }) {
+  let className = 'FormField-Label'
+  if (type === 'radio') {
+    className += ' FormField-Label__Radio'
+  }
+  return <label className={className}>{children}</label>
+}
+
+function FormFieldLabelText({ children, type }) {
+  let className = 'FormField-LabelText'
+  if (type === 'radio') {
+    className += ' FormField-LabelText__Radio'
+  }
+  return <span className={className}>{children}</span>
+}
+
+function TextInputField({ placeholder, value, onChange, errorMessageLabel }) {
+  const [isFocused, setIsFocused] = React.useState(false)
+  const [hasFocusedOnce, setHasFocusedOnce] = React.useState(false)
+
+  const onFocus = () => {
+    setIsFocused(true)
+    setHasFocusedOnce(true)
   }
 
+  const onBlur = () => setIsFocused(false)
+
+  return (
+    <div>
+      <input
+        className='FormField-Input FormField-Input__Text'
+        type='text'
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+      {hasFocusedOnce && !isFocused && !value && (
+        <ErrorMessage label={errorMessageLabel} />
+      )}
+    </div>
+  )
+}
+  
+export default function AddressInfo({nextStep}) {
+  const cityName = useTextInputState()
   const [province, setProvince] = React.useState('ontario')
   const onChangeProvince = event => {
       setProvince(event.target.value)
-      console.log(event.target.value)
-  }
-  function FormField({ children }) {
-    return <div className='FormField'>{children}</div>
   }
 
-  function FormFieldLabel({ children, type }) {
-    let className = 'FormField-Label'
-    if (type === 'radio') {
-      className += ' FormField-Label__Radio'
-    }
-    return <label className={className}>{children}</label>
-  }
-
-  function FormFieldLabelText({ children, type }) {
-    let className = 'FormField-LabelText'
-    if (type === 'radio') {
-      className += ' FormField-LabelText__Radio'
-    }
-    return <span className={className}>{children}</span>
-  }
-
-  function TextInputField({ placeholder, value, onChange, errorMessageLabel }) {
-    const [isFocused, setIsFocused] = React.useState(false)
-    const [hasFocusedOnce, setHasFocusedOnce] = React.useState(false)
-
-    const onFocus = () => {
-      setIsFocused(true)
-      setHasFocusedOnce(true)
-    }
-
-    const onBlur = () => setIsFocused(false)
-
-    return (
-      <div>
-        <input
-          className='FormField-Input FormField-Input__Text'
-          type='text'
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        />
-        {hasFocusedOnce && !isFocused && !value && (
-          <ErrorMessage label={errorMessageLabel} />
-        )}
-      </div>
-    )
-  }
-  
   return (
     <div>
       <h3>Address Info</h3>
@@ -72,8 +77,8 @@ export default function AddressInfo({nextStep}) {
           <FormFieldLabelText><spam className='FormField-Heading'>City</spam></FormFieldLabelText>
           <TextInputField
             placeholder='Enter your city'
-            value={city}
-            onChange={onChangeCity}
+            value={cityName.value}
+            onChange={cityName.onChange}
             errorMessageLabel='City required'
           />
         </FormFieldLabel>
@@ -103,8 +108,8 @@ export default function AddressInfo({nextStep}) {
       <div className='FormSubmit'>
       <button
         className='FormSubmit-Button'
-        onClick={() => nextStep({ city: city, province: province })}
-        disabled={!city || !province}
+        onClick={() => nextStep({ city: cityName.value, province: province })}
+        disabled={!cityName.value || !province}
       >
         Continue
       </button>
