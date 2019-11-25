@@ -27,7 +27,7 @@
 .FormField-Input {
 }
 .FormField-Input__Text {
-  width: 100%;
+  width: 70%;
   height: 40px;
 
   font: inherit;
@@ -67,6 +67,28 @@
   cursor: pointer;
 }
 .FormSubmit-Button[disabled] {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.FormSubmit-backButton {
+  height: 40px;
+  padding: 0 20px;
+  margin-right: 20px;
+
+  background-color: #0069ce;
+  border: 0;
+  border-radius: 5px;
+
+  font: inherit;
+  font-weight: bold;
+  color: white;
+}
+.FormSubmit-backButton:hover {
+  background-color: #00499e;
+  cursor: pointer;
+}
+.FormSubmit-backButton[disabled] {
   background-color: #bbb;
   cursor: not-allowed;
 }

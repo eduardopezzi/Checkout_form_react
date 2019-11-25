@@ -59,7 +59,8 @@ function useTextInputState() {
     onChange,
   }
 }
-export default function BasicInfo({nextStep}) {
+
+export default function BasicInfo({ nextStep }) {
   const firstNameState = useTextInputState()
   const lastNameState = useTextInputState()
   const [diet, setDiet] = React.useState(null)
@@ -67,14 +68,15 @@ export default function BasicInfo({nextStep}) {
 
   return (
     <div>
-        <h3>Basic Info</h3>
-
-        <FormField>
+      <h3>Basic Info</h3>
+      <FormField>
         <FormFieldLabel>
-          <FormFieldLabelText> <spam className='FormField-Heading' >First Name</spam></FormFieldLabelText>
+          <FormFieldLabelText>
+            <spam className='FormField-Heading'>First Name</spam>
+          </FormFieldLabelText>
           <TextInputField
-            placeholder='Enter your first name'
-            value={firstNameState.value}
+            placeholder={'Enter your first name'}
+            value={firstNameState.value} 
             onChange={firstNameState.onChange}
             errorMessageLabel='First name required'
           />
@@ -83,7 +85,9 @@ export default function BasicInfo({nextStep}) {
 
       <FormField>
         <FormFieldLabel>
-          <FormFieldLabelText> <spam className='FormField-Heading' >Last Name </spam></FormFieldLabelText>
+          <FormFieldLabelText>
+            <spam className='FormField-Heading'>Last Name </spam>
+          </FormFieldLabelText>
           <TextInputField
             placeholder='Enter your last name'
             value={lastNameState.value}
@@ -95,20 +99,30 @@ export default function BasicInfo({nextStep}) {
 
       <FormField>
         <FormFieldLabel>
-          <FormFieldLabelText><spam className='FormField-Heading'>Diet Restriction</spam></FormFieldLabelText>
-            <select onChange={onChangeDiet} value={diet}>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="halal-kosher">Halal/Kosher</option>
-                <option value="none" selected>None</option>
-            </select> 
+          <FormFieldLabelText>
+            <spam className='FormField-Heading'>Diet Restriction</spam>
+          </FormFieldLabelText>
+          <select onChange={onChangeDiet} value={diet}>
+            <option value='vegetarian'>Vegetarian</option>
+            <option value='vegan'>Vegan</option>
+            <option value='halal-kosher'>Halal/Kosher</option>
+            <option value='none' selected>
+              None
+            </option>
+          </select>
         </FormFieldLabel>
       </FormField>
 
       <div className='FormSubmit'>
         <button
           className='FormSubmit-Button'
-          onClick={() => nextStep({ firstName: firstNameState.value, lastName: lastNameState.value, diet: diet })}
+          onClick={() =>
+            nextStep({
+              firstName: firstNameState.value,
+              lastName: lastNameState.value,
+              diet: diet,
+            })
+          }
           disabled={!firstNameState.value || !lastNameState.value}
         >
           Continue

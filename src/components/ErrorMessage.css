@@ -3,6 +3,7 @@
   background-color: rgba(238, 34, 0, 0.2);
   padding: 5px 10px;
   border-radius: 3px;
+  width: 70%;
 }
 
 .ErrorMessage-Text {

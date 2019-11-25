@@ -3,7 +3,50 @@ import './Forms'
 import './Payment.css'
 import ErrorMessage from './ErrorMessage'
 
-export default function Payment({nextStep}) {
+function FormField({ children }) {
+  return <div className='FormField'>{children}</div>
+}
+
+function FormFieldLabel({ children, type }) {
+  let className = 'FormField-Label'
+  if (type === 'radio') {
+    className += ' FormField-Label__Radio'
+  }
+  return <label className={className}>{children}</label>
+}
+
+function FormFieldLabelText({ children, type }) {
+  let className = 'FormField-LabelText'
+  if (type === 'radio') {
+    className += ' FormField-LabelText__Radio'
+  }
+  return <span className={className}>{children}</span>
+}
+
+function RadioInputField({ value, checked, onChange }) {
+  return (
+    <input
+      className='FormField-Input FormField-Input__Radio'
+      type='radio'
+      value={value}
+      checked={checked}
+      onChange={onChange}
+    />
+  )
+}
+// const [loading, setLoading] = React.useState(false)
+// const handleSubmit = () => {
+//   setLoading(true);
+//   fetch('sdsdfgd')
+//   .then((response)=>{
+//     setLoading(false);
+//     //display reposne
+//   })
+// }
+
+// {loading? <spinner> : null}
+
+export default function Payment({ nextStep, previousStep }) {
   const [termsAgreed, setTermsAgreed] = React.useState('')
   const onChangeTerms = event => {
     setTermsAgreed(event.target.checked)
@@ -28,40 +71,6 @@ export default function Payment({nextStep}) {
       window.removeEventListener('offline', handleOffline)
     }
   }, [])
-
-  function FormField({ children }) {
-    return <div className='FormField'>{children}</div>
-  }
-
-  function FormFieldLabel({ children, type }) {
-    let className = 'FormField-Label'
-    if (type === 'radio') {
-      className += ' FormField-Label__Radio'
-    }
-    return <label className={className}>{children}</label>
-  }
-
-  function FormFieldLabelText({ children, type }) {
-    let className = 'FormField-LabelText'
-    if (type === 'radio') {
-      className += ' FormField-LabelText__Radio'
-    }
-    return <span className={className}>{children}</span>
-  }
-
-  function RadioInputField({ value, checked, onChange }) {
-    return (
-      <input
-        className='FormField-Input FormField-Input__Radio'
-        type='radio'
-        value={value}
-        checked={checked}
-        onChange={onChange}
-      />
-    )
-  }
-
-
 
   return (
     <div>
@@ -122,16 +131,26 @@ export default function Payment({nextStep}) {
         </FormFieldLabel>
       </FormField>
       <div>
-     {isOnline ? null : <ErrorMessage label={'You are OffLine. Go OnLine to save the Data'} />}
+        {isOnline ? null : (
+          <ErrorMessage label={'You are OffLine. Go OnLine to save the Data'} />
+        )}
       </div>
 
       <div className='FormSubmit'>
         <button
+          className='FormSubmit-backButton'
+          onClick={() => previousStep()}
+        >
+          Back
+        </button>
+
+        <button
           className='FormSubmit-Button'
-          onClick={() => nextStep({ payment: payment, termsAgreed: termsAgreed })}
+          onClick={() =>
+            nextStep({ payment: payment, termsAgreed: termsAgreed })
+          }
           disabled={!termsAgreed || !payment || !isOnline}
         >
-          
           Submit
         </button>
       </div>

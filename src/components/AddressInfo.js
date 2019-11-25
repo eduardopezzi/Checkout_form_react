@@ -1,7 +1,7 @@
 import React from 'react'
 import './Forms'
 import ErrorMessage from './ErrorMessage'
-import './AddressInfo.css'
+import './BasicInfo.css'
 
 function useTextInputState() {
   const [value, setValue] = React.useState('')
@@ -61,7 +61,7 @@ function TextInputField({ placeholder, value, onChange, errorMessageLabel }) {
   )
 }
   
-export default function AddressInfo({nextStep}) {
+export default function AddressInfo({nextStep, previousStep}) {
   const cityName = useTextInputState()
   const [province, setProvince] = React.useState('ontario')
   const onChangeProvince = event => {
@@ -106,6 +106,14 @@ export default function AddressInfo({nextStep}) {
       </FormField>
 
       <div className='FormSubmit'>
+      <button
+        className='FormSubmit-backButton'
+        onClick={() => previousStep()}
+      >
+        Back
+      </button>
+    
+
       <button
         className='FormSubmit-Button'
         onClick={() => nextStep({ city: cityName.value, province: province })}
