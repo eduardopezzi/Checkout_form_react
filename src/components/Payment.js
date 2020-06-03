@@ -1,43 +1,43 @@
-import React from 'react'
-import './Forms'
-import './Payment.css'
-import ErrorMessage from './ErrorMessage'
+import React from "react";
+import "./Forms";
+import "./Payment.css";
+import ErrorMessage from "./ErrorMessage";
 
 function FormField({ children }) {
-  return <div className='FormField'>{children}</div>
+  return <div className="FormField">{children}</div>;
 }
 
 function FormFieldLabel({ children, type }) {
-  let className = 'FormField-Label'
-  if (type === 'radio') {
-    className += ' FormField-Label__Radio'
+  let className = "FormField-Label";
+  if (type === "radio") {
+    className += " FormField-Label__Radio";
   }
-  return <label className={className}>{children}</label>
+  return <label className={className}>{children}</label>;
 }
 
 function FormFieldLabelText({ children, type }) {
-  let className = 'FormField-LabelText'
-  if (type === 'radio') {
-    className += ' FormField-LabelText__Radio'
+  let className = "FormField-LabelText";
+  if (type === "radio") {
+    className += " FormField-LabelText__Radio";
   }
-  return <span className={className}>{children}</span>
+  return <span className={className}>{children}</span>;
 }
 
 function RadioInputField({ value, checked, onChange }) {
   return (
     <input
-      className='FormField-Input FormField-Input__Radio'
-      type='radio'
+      className="FormField-Input FormField-Input__Radio"
+      type="radio"
       value={value}
       checked={checked}
       onChange={onChange}
     />
-  )
+  );
 }
 // const [loading, setLoading] = React.useState(false)
 // const handleSubmit = () => {
 //   setLoading(true);
-//   fetch('sdsdfgd')
+//   fetch('teste')
 //   .then((response)=>{
 //     setLoading(false);
 //     //display reposne
@@ -47,44 +47,44 @@ function RadioInputField({ value, checked, onChange }) {
 // {loading? <spinner> : null}
 
 export default function Payment({ nextStep, previousStep }) {
-  const [termsAgreed, setTermsAgreed] = React.useState('')
-  const onChangeTerms = event => {
-    setTermsAgreed(event.target.checked)
-  }
+  const [termsAgreed, setTermsAgreed] = React.useState("");
+  const onChangeTerms = (event) => {
+    setTermsAgreed(event.target.checked);
+  };
 
-  const [payment, setPayment] = React.useState('')
-  const onChangePayment = event => {
-    setPayment(event.target.value)
-    console.log(event.target.value)
-  }
+  const [payment, setPayment] = React.useState("");
+  const onChangePayment = (event) => {
+    setPayment(event.target.value);
+    console.log(event.target.value);
+  };
 
-  const [isOnline, setIsOnline] = React.useState(navigator.onLine)
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
   React.useEffect(() => {
-    const handleOnline = () => setIsOnline(true)
-    const handleOffline = () => setIsOnline(false)
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   return (
     <div>
       <h3>Payment Info</h3>
 
-      <FormField>
-        <spam className='FormField-Heading'>Method Payment</spam>
+      <FormField style={""}>
+        <spam className="FormField-Heading">Method Payment</spam>
 
         <div>
-          <FormFieldLabel type='radio'>
-            <FormFieldLabelText type='radio'>
+          <FormFieldLabel type="radio">
+            <FormFieldLabelText type="radio">
               <RadioInputField
-                value='Bitcoin'
-                checked={payment === 'Bitcoin'}
+                value="Bitcoin"
+                checked={payment === "Bitcoin"}
                 onChange={onChangePayment}
               />
               Bitcoin
@@ -92,11 +92,11 @@ export default function Payment({ nextStep, previousStep }) {
           </FormFieldLabel>
         </div>
         <div>
-          <FormFieldLabel type='radio'>
-            <FormFieldLabelText type='radio'>
+          <FormFieldLabel type="radio">
+            <FormFieldLabelText type="radio">
               <RadioInputField
-                value='Paypal'
-                checked={payment === 'Paypal'}
+                value="Paypal"
+                checked={payment === "Paypal"}
                 onChange={onChangePayment}
               />
               Paypal
@@ -104,11 +104,11 @@ export default function Payment({ nextStep, previousStep }) {
           </FormFieldLabel>
         </div>
         <div>
-          <FormFieldLabel type='radio'>
-            <FormFieldLabelText type='radio'>
+          <FormFieldLabel type="radio">
+            <FormFieldLabelText type="radio">
               <RadioInputField
-                value='Credit-Card'
-                checked={payment === 'Credit-Card'}
+                value="Credit-Card"
+                checked={payment === "Credit-Card"}
                 onChange={onChangePayment}
               />
               Credit Card
@@ -121,8 +121,8 @@ export default function Payment({ nextStep, previousStep }) {
         <FormFieldLabel>
           <FormFieldLabelText>
             <input
-              className='FormField-Input FormField-Input__Checkbox'
-              type='checkbox'
+              className="FormField-Input FormField-Input__Checkbox"
+              type="checkbox"
               checked={termsAgreed}
               onChange={onChangeTerms}
             />
@@ -132,20 +132,20 @@ export default function Payment({ nextStep, previousStep }) {
       </FormField>
       <div>
         {isOnline ? null : (
-          <ErrorMessage label={'You are OffLine. Go OnLine to save the Data'} />
+          <ErrorMessage label={"You are OffLine. Go OnLine to save the Data"} />
         )}
       </div>
 
-      <div className='FormSubmit'>
+      <div className="FormSubmit">
         <button
-          className='FormSubmit-backButton'
+          className="FormSubmit-backButton"
           onClick={() => previousStep()}
         >
           Back
         </button>
 
         <button
-          className='FormSubmit-Button'
+          className="FormSubmit-Button"
           onClick={() =>
             nextStep({ payment: payment, termsAgreed: termsAgreed })
           }
@@ -155,5 +155,5 @@ export default function Payment({ nextStep, previousStep }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
