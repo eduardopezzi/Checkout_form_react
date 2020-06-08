@@ -68,8 +68,8 @@ export default function BasicInfo({ nextStep }) {
   const onChangeDiet = (event) => setDiet(event.target.value);
 
   return (
-    <div>
-      <h3>Basic Info</h3> <Box m={5} />
+    <div className="BasicInfo-Form">
+      <h3>Basic Info</h3> <Box m={1} />
       <FormField>
         <FormFieldLabel>
           <FormFieldLabelText>

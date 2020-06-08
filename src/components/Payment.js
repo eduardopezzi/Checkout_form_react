@@ -73,7 +73,7 @@ export default function Payment({ nextStep, previousStep }) {
   }, []);
 
   return (
-    <div>
+    <div className="BasicInfo-Form">
       <h3>Payment Info</h3>
 
       <FormField style={""}>
